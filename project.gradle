@@ -30,9 +30,8 @@ targetCompatibility = JavaVersion.VERSION_1_7; // defaults to sourceCompatibilit
  */
 dependencies {
     implementation(group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.9.9");
-    implementation(group: "com.google.guava", name: "guava", version: "28.1-android");
     implementation(group: "com.github.java-json-tools", name: "msg-simple", version: "1.2-SNAPSHOT");
-    implementation(group: "com.google.code.findbugs", name: "jsr305", version: "2.0.1");
+    implementation(group: "com.google.code.findbugs", name: "jsr305", version: "3.0.2");
     testImplementation(group: "org.testng", name: "testng", version: "6.8.7") {
         exclude(group: "junit", module: "junit");
         exclude(group: "org.beanshell", module: "bsh");
@@ -49,9 +48,8 @@ javadoc {
             addStringOption("-release", "7");
         }
         links("https://docs.oracle.com/javase/7/docs/api/");
-        links("https://www.javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/");
-        links("https://fasterxml.github.io/jackson-databind/javadoc/2.2.0/");
-        links("https://www.javadoc.io/doc/com.google.guava/guava/28.1-android/");
+        links("https://www.javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.2/");
+        links("https://fasterxml.github.io/jackson-databind/javadoc/2.9/");
         links("https://java-json-tools.github.io/msg-simple/");
     }
 }

@@ -20,15 +20,15 @@
 package com.github.fge.jackson;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.google.common.base.Equivalence;
-import com.google.common.collect.Sets;
+import com.github.fge.jackson.com.google.common.base.Equivalence;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 /**
- * An {@link Equivalence} strategy for JSON Schema equality
+ * An {@code com.google.common.base.Equivalence} like strategy for JSON Schema equality
  *
  * <p>{@link JsonNode} does a pretty good job of obeying the  {@link
  * Object#equals(Object) equals()}/{@link Object#hashCode() hashCode()}
@@ -183,13 +183,32 @@ public final class JsonNumEquals
         /*
          * Grab the key set from the first node
          */
-        final Set<String> keys = Sets.newHashSet(a.fieldNames());
+        final Set<String> keys = new HashSet<>();
+        Iterator<String> iterator1 = a.fieldNames();
+        while (iterator1.hasNext()) {
+            final String next = iterator1.next();
+            if (next != null) {
+                keys.add(next);
+            } else {
+                throw new NullPointerException();
+            }
+        }
 
         /*
          * Grab the key set from the second node, and see if both sets are the
          * same. If not, objects are not equal, no need to check for children.
          */
-        final Set<String> set = Sets.newHashSet(b.fieldNames());
+        final Set<String> set = new HashSet<>();
+        Iterator<String> iterator2 = b.fieldNames();
+        while (iterator2.hasNext()) {
+            final String next = iterator2.next();
+            if (next != null) {
+            set.add(next);
+            } else {
+                throw new NullPointerException();
+            }
+        }
+
         if (!set.equals(keys))
             return false;
 

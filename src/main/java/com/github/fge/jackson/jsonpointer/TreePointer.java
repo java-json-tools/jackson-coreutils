@@ -26,12 +26,12 @@ import com.fasterxml.jackson.databind.node.MissingNode;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.github.fge.msgsimple.bundle.MessageBundle;
 import com.github.fge.msgsimple.load.MessageBundles;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 
+import javax.annotation.concurrent.ThreadSafe;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * A pointer into a {@link TreeNode}
@@ -92,7 +92,7 @@ public abstract class TreePointer<T extends TreeNode>
         final List<TokenResolver<T>> tokenResolvers)
     {
         this.missing = missing;
-        this.tokenResolvers = ImmutableList.copyOf(tokenResolvers);
+        this.tokenResolvers = Collections.unmodifiableList(new ArrayList<>(tokenResolvers));
     }
 
     /**
@@ -206,7 +206,7 @@ public abstract class TreePointer<T extends TreeNode>
         throws JsonPointerException
     {
         String s = BUNDLE.checkNotNull(input, "nullInput");
-        final List<ReferenceToken> ret = Lists.newArrayList();
+        final List<ReferenceToken> ret = new ArrayList<>();
         String cooked;
         int index;
         char c;
