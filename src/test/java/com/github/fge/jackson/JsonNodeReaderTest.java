@@ -24,8 +24,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.msgsimple.bundle.MessageBundle;
 import com.github.fge.msgsimple.bundle.PropertiesBundle;
-import com.google.common.base.Supplier;
-import com.google.common.collect.Lists;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -35,6 +33,8 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -71,7 +71,7 @@ public final class JsonNodeReaderTest
     @DataProvider
     public Iterator<Object[]> getMalformedData()
     {
-        final List<Object[]> list = Lists.newArrayList();
+        final List<Object[]> list = new ArrayList<>();
 
         list.add(new Object[] { "", "read.noContent"});
         list.add(new Object[] { "[]{}", "read.trailingData"});
@@ -105,11 +105,7 @@ public final class JsonNodeReaderTest
             @Override
             public InputStream get()
             {
-                try {
-                    return new ByteArrayInputStream(input.getBytes("UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    throw new RuntimeException("Unhandled exception", e);
-                }
+                return new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
             }
         };
     }
@@ -124,5 +120,22 @@ public final class JsonNodeReaderTest
                 return new StringReader(input);
             }
         };
+    }
+
+    /**
+     * A class that can supply objects of a single type.  Semantically, this could
+     * be a factory, generator, builder, closure, or something else entirely. No
+     * guarantees are implied by this interface.
+     *
+     * @author Harry Heymann
+     */
+    public interface Supplier<T> {
+        /**
+         * Retrieves an instance of the appropriate type. The returned object may or
+         * may not be a new instance, depending on the implementation.
+         *
+         * @return an instance of the appropriate type
+         */
+        T get();
     }
 }
