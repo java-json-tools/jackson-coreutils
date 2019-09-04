@@ -56,6 +56,17 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 }
 
 /*
+ * Lint all the things!
+ */
+allprojects {
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:all"
+        }
+    }
+}
+
+/*
  * Javadoc: we need to tell where the overview.html is, it will not pick it up
  * automatically...
  */
