@@ -1,8 +1,7 @@
 [![License LGPLv3][LGPLv3 badge]][LGPLv3]
 [![License ASL 2.0][ASL 2.0 badge]][ASL 2.0]
 [![Build Status][Travis badge]][Travis]
-![Maven Central](https://img.shields.io/maven-central/v/com.github.java-json-tools/jackson-coreutils.svg)
-
+[![Maven Central][Maven Central badge]][Maven]
 
 ## Read me first
 
@@ -212,3 +211,5 @@ if (!ptr.path(node).isMissingNode())
 [ASL 2.0]: http://www.apache.org/licenses/LICENSE-2.0.html
 [Travis Badge]: https://api.travis-ci.org/java-json-tools/jackson-coreutils.svg?branch=master
 [Travis]: https://travis-ci.org/java-json-tools/jackson-coreutils
+[Maven Central badge]: https://img.shields.io/maven-central/v/com.github.java-json-tools/jackson-coreutils.svg
+[Maven]: https://search.maven.org/artifact/com.github.java-json-tools/jackson-coreutils
