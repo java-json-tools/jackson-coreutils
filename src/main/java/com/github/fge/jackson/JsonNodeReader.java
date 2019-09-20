@@ -133,9 +133,9 @@ public final class JsonNodeReader
     private static JsonNode readNode(final MappingIterator<JsonNode> iterator)
         throws IOException
     {
-        final Object source = iterator.getParser().getInputSource();
+        final JsonParser parser = iterator.getParser();
         final JsonParseExceptionBuilder builder
-            = new JsonParseExceptionBuilder(source);
+            = new JsonParseExceptionBuilder(parser);
 
        builder.setMessage(BUNDLE.getMessage("read.noContent"));
 
@@ -160,13 +160,15 @@ public final class JsonNodeReader
     private static final class JsonParseExceptionBuilder
         implements Builder<JsonParseException>
     {
+        private JsonParser parser;
         private String message = "";
         private JsonLocation location;
 
-        private JsonParseExceptionBuilder(@Nonnull final Object source)
+        private JsonParseExceptionBuilder(@Nonnull final JsonParser parser)
         {
-            BUNDLE.checkNotNull(source, "read.nullArgument");
-            location = new JsonLocation(source, 0L, 1, 1);
+            BUNDLE.checkNotNull(parser, "read.nullArgument");
+            this.parser = parser;
+            location = parser.getCurrentLocation();
         }
 
         private JsonParseExceptionBuilder setMessage(
@@ -186,7 +188,7 @@ public final class JsonNodeReader
         @Override
         public JsonParseException build()
         {
-            return new JsonParseException(message, location);
+            return new JsonParseException(parser, message, location);
         }
     }
 }
