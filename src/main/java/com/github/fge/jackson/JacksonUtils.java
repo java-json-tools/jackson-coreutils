@@ -20,6 +20,7 @@
 package com.github.fge.jackson;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -142,7 +143,7 @@ public final class JacksonUtils
      *
      * <ul>
      *     <li>{@link DeserializationFeature#USE_BIG_DECIMAL_FOR_FLOATS};</li>
-     *     <li>{@link SerializationFeature#WRITE_BIGDECIMAL_AS_PLAIN};</li>
+     *     <li>{@link JsonGenerator.Feature#WRITE_BIGDECIMAL_AS_PLAIN};</li>
      *     <li>{@link SerializationFeature#INDENT_OUTPUT}.</li>
      * </ul>
      *
@@ -154,7 +155,7 @@ public final class JacksonUtils
     {
         return new ObjectMapper().setNodeFactory(FACTORY)
             .enable(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS)
-            .enable(SerializationFeature.WRITE_BIGDECIMAL_AS_PLAIN)
+            .enable(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN)
             .enable(SerializationFeature.INDENT_OUTPUT);
     }
 }
