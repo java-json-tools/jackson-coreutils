@@ -74,13 +74,13 @@ public final class JsonNodeResolverTest
         ObjectNode node;
 
         node = FACTORY.objectNode();
-        node.put("a", target);
+        node.set("a", target);
 
         final JsonNode resolved = resolver.get(node);
         assertEquals(resolved, target);
 
         node = FACTORY.objectNode();
-        node.put("b", target);
+        node.set("b", target);
 
         assertNull(resolver.get(node));
     }

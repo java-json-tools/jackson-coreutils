@@ -86,9 +86,9 @@ public final class JsonNumEqualsTest
         final JsonNode node)
     {
         final ObjectNode node1 = FACTORY.objectNode();
-        node1.put("foo", reference);
+        node1.set("foo", reference);
         final ObjectNode node2 = FACTORY.objectNode();
-        node2.put("foo", node);
+        node2.set("foo", node);
 
         assertTrue(JsonNumEquals.getInstance().equivalent(node1, node2));
     }
