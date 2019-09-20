@@ -71,7 +71,7 @@ public final class JsonNodeReader
     public JsonNodeReader(final ObjectMapper mapper)
     {
         reader = mapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true)
-            .reader(JsonNode.class);
+            .readerFor(JsonNode.class);
     }
 
     /**
