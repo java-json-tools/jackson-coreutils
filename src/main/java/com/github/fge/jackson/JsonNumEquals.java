@@ -130,7 +130,7 @@ public final class JsonNumEquals
          */
         if (t.isArray()) {
             for (final JsonNode element: t)
-                ret = 31 * ret + doHash(element);
+                ret = 31 * ret + hash(element);
             return ret;
         }
 
@@ -144,7 +144,7 @@ public final class JsonNumEquals
         while (iterator.hasNext()) {
             entry = iterator.next();
             ret = 31 * ret
-                + (entry.getKey().hashCode() ^ doHash(entry.getValue()));
+                + (entry.getKey().hashCode() ^ hash(entry.getValue()));
         }
 
         return ret;
@@ -172,7 +172,7 @@ public final class JsonNumEquals
         final int size = a.size();
 
         for (int i = 0; i < size; i++)
-            if (!doEquivalent(a.get(i), b.get(i)))
+            if (!equivalent(a.get(i), b.get(i)))
                 return false;
 
         return true;
@@ -197,7 +197,7 @@ public final class JsonNumEquals
          * Test each member individually.
          */
         for (final String key: keys)
-            if (!doEquivalent(a.get(key), b.get(key)))
+            if (!equivalent(a.get(key), b.get(key)))
                 return false;
 
         return true;
