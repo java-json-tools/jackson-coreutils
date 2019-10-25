@@ -29,9 +29,9 @@ import com.github.fge.msgsimple.load.MessageBundles;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
-import javax.annotation.concurrent.ThreadSafe;
 import java.util.Iterator;
 import java.util.List;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * A pointer into a {@link TreeNode}
@@ -174,7 +174,7 @@ public abstract class TreePointer<T extends TreeNode>
             return false;
         if (this == obj)
             return true;
-        if (getClass() != obj.getClass())
+        if (!(obj instanceof TreePointer))
             return false;
         final TreePointer<?> other = (TreePointer<?>) obj;
         return tokenResolvers.equals(other.tokenResolvers);

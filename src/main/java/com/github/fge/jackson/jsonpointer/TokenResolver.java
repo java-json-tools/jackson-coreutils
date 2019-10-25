@@ -90,7 +90,7 @@ public abstract class TokenResolver<T extends TreeNode>
             return false;
         if (this == obj)
             return true;
-        if (getClass() != obj.getClass())
+        if (!(obj instanceof TokenResolver))
             return false;
         final TokenResolver<?> other = (TokenResolver<?>) obj;
         return token.equals(other.token);

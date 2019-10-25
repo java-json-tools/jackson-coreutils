@@ -95,11 +95,11 @@ public final class JacksonUtils
      */
     public static Map<String, JsonNode> asMap(final JsonNode node)
     {
+        final Map<String, JsonNode> ret = Maps.newHashMap();
         if (!node.isObject())
-            return Collections.emptyMap();
+            return ret;
 
         final Iterator<Map.Entry<String, JsonNode>> iterator = node.fields();
-        final Map<String, JsonNode> ret = Maps.newHashMap();
 
         Map.Entry<String, JsonNode> entry;
 
