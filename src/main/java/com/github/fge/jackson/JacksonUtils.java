@@ -33,7 +33,6 @@ import com.google.common.collect.Maps;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 

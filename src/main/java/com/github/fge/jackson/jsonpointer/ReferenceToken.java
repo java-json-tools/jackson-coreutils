@@ -24,7 +24,6 @@ import com.github.fge.msgsimple.load.MessageBundles;
 import com.google.common.collect.ImmutableList;
 
 import java.nio.CharBuffer;
-import java.util.List;
 import javax.annotation.concurrent.Immutable;
 
 
