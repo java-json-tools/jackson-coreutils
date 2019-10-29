@@ -22,8 +22,8 @@
  */
 group = "com.github.java-json-tools";
 version = "1.11-SNAPSHOT";
-sourceCompatibility = JavaVersion.VERSION_1_6;
-targetCompatibility = JavaVersion.VERSION_1_6; // defaults to sourceCompatibility
+sourceCompatibility = JavaVersion.VERSION_1_7;
+targetCompatibility = JavaVersion.VERSION_1_7; // defaults to sourceCompatibility
 
 /*
  * List of dependencies
@@ -41,7 +41,7 @@ dependencies {
     testImplementation(group: "org.mockito", name: "mockito-core", version: "2.28.2");
 }
 
-javadoc.options.links("http://docs.oracle.com/javase/6/docs/api/");
+javadoc.options.links("http://docs.oracle.com/javase/7/docs/api/");
 javadoc.options.links("http://www.javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/");
 javadoc.options.links("http://fasterxml.github.com/jackson-databind/javadoc/2.2.0/");
 javadoc.options.links("http://www.javadoc.io/doc/com.google.guava/guava/28.1-jre/");
