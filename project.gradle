@@ -50,7 +50,7 @@ javadoc {
         }
         links("https://docs.oracle.com/javase/7/docs/api/");
         links("https://www.javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/");
-        links("https://fasterxml.github.io/jackson-databind/javadoc/2.2.0/");
+        links("https://fasterxml.github.io/jackson-databind/javadoc/2.9/");
         links("https://www.javadoc.io/doc/com.google.guava/guava/28.1-android/");
         links("https://java-json-tools.github.io/msg-simple/");
     }
