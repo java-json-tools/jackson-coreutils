@@ -143,7 +143,7 @@ public final class JacksonUtils
      *
      * <ul>
      *     <li>{@link DeserializationFeature#USE_BIG_DECIMAL_FOR_FLOATS};</li>
-     *     <li>{@link JsonGenerator.Feature#WRITE_BIGDECIMAL_AS_PLAIN};</li>
+     *     <li>{@link com.fasterxml.jackson.core.JsonGenerator.Feature#WRITE_BIGDECIMAL_AS_PLAIN};</li>
      *     <li>{@link SerializationFeature#INDENT_OUTPUT}.</li>
      * </ul>
      *
