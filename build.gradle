@@ -84,6 +84,7 @@ test {
     useTestNG() {
         useDefaultListeners = true;
     };
+    jvmArgs "--illegal-access=debug"
 }
 
 /*
