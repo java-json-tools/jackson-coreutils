@@ -29,11 +29,11 @@ targetCompatibility = JavaVersion.VERSION_1_7; // defaults to sourceCompatibilit
  * List of dependencies
  */
 dependencies {
-    implementation(group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.9.9");
-    implementation(group: "com.google.guava", name: "guava", version: "28.1-android");
+    implementation(group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.10.2");
+    implementation(group: "com.google.guava", name: "guava", version: "28.2-android");
     implementation(group: "com.github.java-json-tools", name: "msg-simple", version: "1.2");
-    implementation(group: "com.google.code.findbugs", name: "jsr305", version: "2.0.1");
-    testImplementation(group: "org.testng", name: "testng", version: "6.8.7") {
+    implementation(group: "com.google.code.findbugs", name: "jsr305", version: "3.0.2");
+    testImplementation(group: "org.testng", name: "testng", version: "7.1.0") {
         exclude(group: "junit", module: "junit");
         exclude(group: "org.beanshell", module: "bsh");
         exclude(group: "org.yaml", module: "snakeyaml");
@@ -49,9 +49,9 @@ javadoc {
             addStringOption("-release", "7");
         }
         links("https://docs.oracle.com/javase/7/docs/api/");
-        links("https://www.javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/");
-        links("https://fasterxml.github.io/jackson-databind/javadoc/2.9/");
-        links("https://www.javadoc.io/doc/com.google.guava/guava/28.1-android/");
+        links("https://www.javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.2/");
+        links("https://fasterxml.github.io/jackson-databind/javadoc/2.10/");
+        links("https://www.javadoc.io/doc/com.google.guava/guava/28.2-android/");
         links("https://java-json-tools.github.io/msg-simple/");
     }
 }
