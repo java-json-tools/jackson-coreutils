@@ -28,10 +28,8 @@ This package is meant to be used with Jackson 2.2.x. It provides the three follo
 
 ## Versions
 
-The current verson is **1.11**. Its Javadoc is [available
-online](https://java-json-tools.github.io/jackson-coreutils/index.html).
-
-Please see file `RELEASE-NOTES.md` for more information.
+Javadoc is [available
+online](https://java-json-tools.github.io/jackson-coreutils/index.html). File `RELEASE-NOTES.md` has notes for 1.10 and earlier.
 
 ## Using in Gradle/Maven
 
@@ -39,7 +37,7 @@ With Gradle:
 
 ```groovy
 dependencies {
-    compile(group: "com.github.java-json-tools", name: "jackson-coreutils", version: "1.10");
+    compile(group: "com.github.java-json-tools", name: "jackson-coreutils", version: "current-version");
 }
 ```
 
@@ -49,7 +47,7 @@ With Maven:
 <dependency>
     <groupId>com.github.java-json-tools</groupId>
     <artifactId>jackson-coreutils</artifactId>
-    <version>1.10</version>
+    <version>current-version</version>
 </dependency>
 ```
 
