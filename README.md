@@ -28,7 +28,7 @@ This package is meant to be used with Jackson 2.2.x. It provides the three follo
 
 ## Versions
 
-The current verson is **1.11**. Its Javadoc is [available
+The current verson is **1.12**. Its Javadoc is [available
 online](https://java-json-tools.github.io/jackson-coreutils/index.html).
 
 Please see file `RELEASE-NOTES.md` for more information.
@@ -209,7 +209,7 @@ if (!ptr.path(node).isMissingNode())
 [LGPLv3]: http://www.gnu.org/licenses/lgpl-3.0.html
 [ASL 2.0 badge]: https://img.shields.io/:license-Apache%202.0-blue.svg
 [ASL 2.0]: http://www.apache.org/licenses/LICENSE-2.0.html
-[Travis Badge]: https://api.travis-ci.org/java-json-tools/jackson-coreutils.svg?branch=master
-[Travis]: https://travis-ci.org/java-json-tools/jackson-coreutils
+[Travis Badge]: https://travis-ci.com/java-json-tools/jackson-coreutils.svg?branch=master
+[Travis]: https://travis-ci.com/java-json-tools/jackson-coreutils
 [Maven Central badge]: https://img.shields.io/maven-central/v/com.github.java-json-tools/jackson-coreutils.svg
 [Maven]: https://search.maven.org/artifact/com.github.java-json-tools/jackson-coreutils
