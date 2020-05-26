@@ -15,3 +15,7 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
+branches:
+  only:
+    - master
+    - v1.x
