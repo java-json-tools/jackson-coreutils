@@ -29,7 +29,7 @@ targetCompatibility = JavaVersion.VERSION_1_7; // defaults to sourceCompatibilit
  * List of dependencies
  */
 dependencies {
-    implementation(group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.10.2");
+    implementation(group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.11.0");
     implementation(group: "com.github.java-json-tools", name: "msg-simple", version: "1.2");
     implementation(group: "com.google.code.findbugs", name: "jsr305", version: "3.0.2");
     testImplementation(group: "org.testng", name: "testng", version: "7.1.0") {
@@ -49,7 +49,7 @@ javadoc {
         }
         links("https://docs.oracle.com/javase/7/docs/api/");
         links("https://www.javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.2/");
-        links("https://fasterxml.github.io/jackson-databind/javadoc/2.10/");
+        links("https://fasterxml.github.io/jackson-databind/javadoc/2.11/");
         links("https://java-json-tools.github.io/msg-simple/");
     }
 }
