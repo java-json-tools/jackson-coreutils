@@ -28,10 +28,13 @@ This package is meant to be used with Jackson 2.2.x. It provides the three follo
 
 ## Versions
 
-The current verson is **1.12**. Its Javadoc is [available
+* `jackson-coreutils` is **2.0**
+* `jackson-coreutils-equivalence` is not yet released.
+
+Javadoc is [available
 online](https://java-json-tools.github.io/jackson-coreutils/index.html).
 
-Please see file `RELEASE-NOTES.md` for more information.
+File `RELEASE-NOTES.md` has historical information.
 
 ## Using in Gradle/Maven
 
@@ -39,7 +42,7 @@ With Gradle:
 
 ```groovy
 dependencies {
-    compile(group: "com.github.java-json-tools", name: "jackson-coreutils", version: "1.10");
+    compile(group: "com.github.java-json-tools", name: "jackson-coreutils", version: "2.0");
 }
 ```
 
@@ -49,7 +52,7 @@ With Maven:
 <dependency>
     <groupId>com.github.java-json-tools</groupId>
     <artifactId>jackson-coreutils</artifactId>
-    <version>1.10</version>
+    <version>2.0</version>
 </dependency>
 ```
 
@@ -101,6 +104,9 @@ will be considered equivalent to:
 ```json
 [ 10e-1, 2.0, 0.3e1 ]
 ```
+
+As of v2.0, the Guava `Equivalence` is in the `jackson-coreutils-equivalence` subproject so that
+`jackson-coreutils` remains Guava-free.
 
 ### JSON Pointer
 
