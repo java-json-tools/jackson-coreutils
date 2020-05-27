@@ -32,7 +32,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -95,11 +94,11 @@ public final class JacksonUtils
      */
     public static Map<String, JsonNode> asMap(final JsonNode node)
     {
+        final Map<String, JsonNode> ret = new HashMap<>();
         if (!node.isObject())
-            return Collections.emptyMap();
+            return ret;
 
         final Iterator<Map.Entry<String, JsonNode>> iterator = node.fields();
-        final Map<String, JsonNode> ret = new HashMap<>();
 
         Map.Entry<String, JsonNode> entry;
 
@@ -108,7 +107,7 @@ public final class JacksonUtils
             ret.put(entry.getKey(), entry.getValue());
         }
 
-        return Collections.unmodifiableMap(ret);
+        return ret;
     }
 
     /**
