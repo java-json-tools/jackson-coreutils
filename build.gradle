@@ -18,86 +18,86 @@
  */
 
 buildscript {
-  repositories {
-    mavenCentral()
-  }
-  dependencies {
-    classpath 'biz.aQute.bnd:biz.aQute.bnd.gradle:4.2.0'
-  }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'biz.aQute.bnd:biz.aQute.bnd.gradle:4.2.0'
+    }
 }
 
 plugins {
     id("net.ltgt.errorprone") version "0.8.1" apply false
 }
 
-apply(plugin: "java");
-apply(plugin: "maven");
-apply(plugin: "signing");
-apply(plugin: "biz.aQute.bnd.builder");
-apply(plugin: "idea");
-apply(plugin: "eclipse");
-apply(plugin: "net.ltgt.errorprone");
+allprojects {
+    apply(plugin: "java");
+    apply(plugin: "maven");
+    apply(plugin: "signing");
+    apply(plugin: "biz.aQute.bnd.builder");
+    apply(plugin: "idea");
+    apply(plugin: "eclipse");
+    apply(plugin: "net.ltgt.errorprone");
 
-apply(from: "project.gradle");
+    apply(from: "project.gradle");
 
-group = "com.github.java-json-tools";
+    group = "com.github.java-json-tools";
 
-ext.forRelease = !version.endsWith("-SNAPSHOT");
+    ext.forRelease = !version.endsWith("-SNAPSHOT");
 
-/*
- * Repositories to use
- */
-repositories {
-    mavenCentral();
-    if (!forRelease) {
-        maven {
-            url "https://oss.sonatype.org/content/repositories/snapshots"
+    /*
+     * Repositories to use
+     */
+    repositories {
+        mavenCentral();
+        if (!forRelease) {
+            maven {
+                url "https://oss.sonatype.org/content/repositories/snapshots"
+            }
         }
-    }
-    /* Allow staging references for last pre-release testing. */
-    if (project.properties.containsKey("sonatypeUsername")) {
-        maven {
-            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-            credentials {
-                username = project.properties["sonatypeUsername"]
-                password = project.properties["sonatypePassword"]
+        /* Allow staging references for last pre-release testing. */
+        if (project.properties.containsKey("sonatypeUsername")) {
+            maven {
+                url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+                credentials {
+                    username = project.properties["sonatypeUsername"]
+                    password = project.properties["sonatypePassword"]
+                }
             }
         }
     }
-}
 
-/*
- * Add errorprone checking.
- */
-dependencies {
-    errorprone("com.google.errorprone:error_prone_core:2.3.3")
-    errorproneJavac("com.google.errorprone:javac:9+181-r4173-1")
-}
+    /*
+     * Add errorprone checking.
+     */
+    dependencies {
+        errorprone("com.google.errorprone:error_prone_core:2.3.3")
+        errorproneJavac("com.google.errorprone:javac:9+181-r4173-1")
+    }
 
-/*
- * Necessary! Otherwise TestNG will not be used...
- *
- * Also, we don't want gradle's default HTML report: it does not support
- * parameterized tests which I use a _lot_.
- */
-test {
-    useTestNG() {
-        useDefaultListeners = true;
-    };
-}
+    /*
+     * Necessary! Otherwise TestNG will not be used...
+     *
+     * Also, we don't want gradle's default HTML report: it does not support
+     * parameterized tests which I use a _lot_.
+     */
+    test {
+        useTestNG() {
+            useDefaultListeners = true;
+        };
+    }
 
-/*
- * Necessary to generate the source and javadoc jars
- */
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = "sources";
-    from sourceSets.main.allSource;
-}
+    /*
+     * Necessary to generate the source and javadoc jars
+     */
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = "sources";
+        from sourceSets.main.allSource;
+    }
 
-/*
- * Lint all the things!
- */
-allprojects {
+    /*
+     * Lint all the things!
+     */
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
             options.compilerArgs << "-Xlint:all" << "-Werror"
@@ -105,6 +105,128 @@ allprojects {
         tasks.withType(Javadoc) {
             options.addStringOption('Xwerror', '-quiet')
         }
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = "javadoc";
+        from javadoc.destinationDir;
+    }
+
+    artifacts {
+        archives jar;
+        archives sourcesJar;
+        archives javadocJar;
+    }
+
+    wrapper {
+        gradleVersion = "5.6.3";
+        distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip";
+    }
+
+    task pom {
+        doLast {
+            pom {}.writeTo("${projectDir}/pom.xml");
+        }
+    }
+
+    /*
+     * SIGNING
+     */
+
+    project.ext {
+        description = "JSON Pointer (RFC 6901) and numeric equality for Jackson (2.2.x)";
+        scmUrl = sprintf("git@github.com:java-json-tools/%s.git", rootProject.name)
+        projectURL = sprintf("https://github.com/java-json-tools/%s", rootProject.name);
+        sonatypeStaging = "https://oss.sonatype.org/service/local/staging/deploy/maven2/";
+        sonatypeSnapshots = "https://oss.sonatype.org/content/repositories/snapshots/";
+    };
+
+    task checkSigningRequirements {
+        doLast {
+            def requiredProperties = [ "sonatypeUsername", "sonatypePassword" ];
+            def noDice = false;
+            requiredProperties.each {
+                if (project.properties[it] == null) {
+                    noDice = true;
+                    System.err.printf("property \"%s\" is not defined!")
+                }
+            }
+            if (noDice)
+                throw new IllegalStateException("missing required properties for " +
+                    "upload");
+        }
+    }
+
+    uploadArchives {
+        dependsOn(checkSigningRequirements);
+        repositories {
+            mavenDeployer {
+                beforeDeployment {
+                    MavenDeployment deployment -> signing.signPom(deployment);
+                }
+
+                repository(url: "${sonatypeStaging}") {
+                    authentication(
+                        userName: project.properties["sonatypeUsername"],
+                        password: project.properties["sonatypePassword"]
+                    );
+                }
+
+                snapshotRepository(url: "${sonatypeSnapshots}") {
+                    authentication(
+                        userName: project.properties["sonatypeUsername"],
+                        password: project.properties["sonatypePassword"]
+                    );
+                }
+            }
+        }
+    }
+
+    /*
+     * Configure pom.xml on install, uploadArchives
+     */
+    [
+        install.repositories.mavenInstaller,
+        uploadArchives.repositories.mavenDeployer
+    ]*.pom*.whenConfigured { pom ->
+        pom.project {
+            name "${project.name}";
+            packaging "jar";
+            description "${project.ext.description}";
+            url "${projectURL}";
+
+            scm {
+                url "${scmUrl}";
+                connection "${scmUrl}";
+                developerConnection "scm:git:${scmUrl}";
+            }
+
+            licenses {
+                license {
+                    name "Lesser General Public License, version 3 or greater";
+                    url "http://www.gnu.org/licenses/lgpl.html";
+                    distribution "repo";
+                };
+                license {
+                    name "Apache Software License, version 2.0";
+                    url "http://www.apache.org/licenses/LICENSE-2.0";
+                    distribution "repo";
+                }
+            }
+
+            developers {
+                developer {
+                    id "huggsboson";
+                    name "John Huffaker";
+                    email "jhuffaker+java-json-tools@gmail.com";
+                }
+            }
+        }
+    }
+
+    signing {
+        required { forRelease && gradle.taskGraph.hasTask("uploadArchives") };
+        sign configurations.archives;
     }
 }
 
@@ -117,125 +239,4 @@ javadoc {
     options.overview = "src/main/java/overview.html";
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = "javadoc";
-    from javadoc.destinationDir;
-}
-
-artifacts {
-    archives jar;
-    archives sourcesJar;
-    archives javadocJar;
-}
-
-wrapper {
-    gradleVersion = "5.6.3";
-    distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip";
-}
-
-task pom {
-    doLast {
-        pom {}.writeTo("${projectDir}/pom.xml");
-    }
-}
-
-/*
- * SIGNING
- */
-
-project.ext {
-    description = "JSON Pointer (RFC 6901) and numeric equality for Jackson (2.2.x)";
-    scmUrl = sprintf("git@github.com:java-json-tools/%s.git", name)
-    projectURL = sprintf("https://github.com/java-json-tools/%s", name);
-    sonatypeStaging = "https://oss.sonatype.org/service/local/staging/deploy/maven2/";
-    sonatypeSnapshots = "https://oss.sonatype.org/content/repositories/snapshots/";
-};
-
-task checkSigningRequirements {
-    doLast {
-        def requiredProperties = [ "sonatypeUsername", "sonatypePassword" ];
-        def noDice = false;
-        requiredProperties.each {
-            if (project.properties[it] == null) {
-                noDice = true;
-                System.err.printf("property \"%s\" is not defined!")
-            }
-        }
-        if (noDice)
-            throw new IllegalStateException("missing required properties for " +
-                "upload");
-    }
-}
-
-uploadArchives {
-    dependsOn(checkSigningRequirements);
-    repositories {
-        mavenDeployer {
-            beforeDeployment {
-                MavenDeployment deployment -> signing.signPom(deployment);
-            }
-
-            repository(url: "${sonatypeStaging}") {
-                authentication(
-                    userName: project.properties["sonatypeUsername"],
-                    password: project.properties["sonatypePassword"]
-                );
-            }
-
-            snapshotRepository(url: "${sonatypeSnapshots}") {
-                authentication(
-                    userName: project.properties["sonatypeUsername"],
-                    password: project.properties["sonatypePassword"]
-                );
-            }
-        }
-    }
-}
-
-/*
- * Configure pom.xml on install, uploadArchives
- */
-[
-    install.repositories.mavenInstaller,
-    uploadArchives.repositories.mavenDeployer
-]*.pom*.whenConfigured { pom ->
-    pom.project {
-        name "${project.name}";
-        packaging "jar";
-        description "${project.ext.description}";
-        url "${projectURL}";
-
-        scm {
-            url "${scmUrl}";
-            connection "${scmUrl}";
-            developerConnection "scm:git:${scmUrl}";
-        }
-
-        licenses {
-            license {
-                name "Lesser General Public License, version 3 or greater";
-                url "http://www.gnu.org/licenses/lgpl.html";
-                distribution "repo";
-            };
-            license {
-                name "Apache Software License, version 2.0";
-                url "http://www.apache.org/licenses/LICENSE-2.0";
-                distribution "repo";
-            }
-        }
-
-        developers {
-            developer {
-                id "huggsboson";
-                name "John Huffaker";
-                email "jhuffaker+java-json-tools@gmail.com";
-            }
-        }
-    }
-}
-
-signing {
-    required { forRelease && gradle.taskGraph.hasTask("uploadArchives") };
-    sign configurations.archives;
-}
 
