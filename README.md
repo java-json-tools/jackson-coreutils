@@ -2,6 +2,8 @@
 [![License ASL 2.0][ASL 2.0 badge]][ASL 2.0]
 [![Build Status][Travis badge]][Travis]
 [![Maven Central][Maven Central badge]][Maven]
+/
+[![Maven Central (equivalence)][Maven Central badge equivalence]][Maven equivalence]
 
 ## Read me first
 
@@ -29,7 +31,7 @@ This package is meant to be used with Jackson 2.2.x. It provides the three follo
 ## Versions
 
 * `jackson-coreutils` is **2.0**
-* `jackson-coreutils-equivalence` is not yet released.
+* `jackson-coreutils-equivalence` is **1.0**
 
 Javadoc is [available
 online](https://java-json-tools.github.io/jackson-coreutils/index.html).
@@ -43,6 +45,7 @@ With Gradle:
 ```groovy
 dependencies {
     compile(group: "com.github.java-json-tools", name: "jackson-coreutils", version: "2.0");
+    compile(group: "com.github.java-json-tools", name: "jackson-coreutils-equivalence", version: "1.0");
 }
 ```
 
@@ -53,6 +56,11 @@ With Maven:
     <groupId>com.github.java-json-tools</groupId>
     <artifactId>jackson-coreutils</artifactId>
     <version>2.0</version>
+</dependency>
+<dependency>
+    <groupId>com.github.java-json-tools</groupId>
+    <artifactId>jackson-coreutils-equivalence</artifactId>
+    <version>1.0</version>
 </dependency>
 ```
 
@@ -219,3 +227,5 @@ if (!ptr.path(node).isMissingNode())
 [Travis]: https://travis-ci.com/java-json-tools/jackson-coreutils
 [Maven Central badge]: https://img.shields.io/maven-central/v/com.github.java-json-tools/jackson-coreutils.svg
 [Maven]: https://search.maven.org/artifact/com.github.java-json-tools/jackson-coreutils
+[Maven Central badge equivalence]: https://img.shields.io/maven-central/v/com.github.java-json-tools/jackson-coreutils-equivalence.svg
+[Maven equivalence]: https://search.maven.org/artifact/com.github.java-json-tools/jackson-coreutils-equivalence
